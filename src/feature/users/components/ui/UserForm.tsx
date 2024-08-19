@@ -1,8 +1,9 @@
 'use client'
 import { useFormState } from 'react-dom';
+import { useRouter } from 'next/navigation';
 import TextField from '@mui/material/TextField';
 import { SubmitButton } from '@/conponents/ui';
-import { TUserResponseData, EUserFormFields } from '../../type';
+import { TUserResponseData, EUserFormFields } from '../../types';
 
 type TProps = {
   initialState?: Awaited<TUserResponseData>;
@@ -10,11 +11,12 @@ type TProps = {
 }
 export default function UserForm({
   initialState = {} as Awaited<TUserResponseData>,
-  action
+  action,
 }: TProps) {
+  const router = useRouter();
   const [state, formAction] = useFormState(action, initialState);
 
-  console.log(state)
+  if (state.success) router.push('/');
 
   return (
     <form className="max-w-[30rem] mx-auto py-4 px-8 flex flex-col gap-4" action={formAction}>
@@ -48,6 +50,8 @@ export default function UserForm({
           || undefined 
         }
       />
+
+      {state.errors?.root && <div className='text-red-500'>{state.errors.root}</div>}
 
       <SubmitButton>Log in</SubmitButton>
     </form>

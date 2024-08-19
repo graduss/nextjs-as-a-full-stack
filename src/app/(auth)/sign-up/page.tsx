@@ -1,4 +1,4 @@
-import SignUp from "@/feature/user/components/SignUp/SigmUp";
+import SignUp from "@/feature/users/components/SignUp/SigmUp";
 
 export default function SignUpPage() {
   return <SignUp />

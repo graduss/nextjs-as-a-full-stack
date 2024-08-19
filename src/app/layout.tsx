@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-//import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+import QueryProvider from "@/conponents/QueryProvider/QueryProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,7 +21,7 @@ export default function RootLayout({
           <header></header>
 
           <main className="container mx-auto py-16">
-            {children}
+            <QueryProvider>{children}</QueryProvider>
           </main>
 
           <footer></footer>

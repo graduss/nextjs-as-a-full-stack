@@ -1,8 +1,8 @@
 'use server';
 import { hash, compare } from "bcrypt";
-import { jwtSign } from "@/services/jwt.service";
+import { jwtSign, jwtVerify } from "@/services/jwt.service";
 import { TSignIn, TSignUp, TUserPayload } from "../types";
-import { ctrateUser, getUserForLogIn } from "./user";
+import { ctrateUser, findUserUnique } from "./user.service";
 
 export async function signUp(userData: TSignUp) {
   const user = Object.assign(
@@ -22,7 +22,7 @@ export async function signUp(userData: TSignUp) {
 }
 
 export async function signIn(userData: TSignIn) {
-  const user = await getUserForLogIn(userData.username);
+  const user = await findUserUnique({ username: userData.username }, { password: true });
   if (!user) throw new Error('User not found');
 
   const verify = await compare(userData.password, user.password);
@@ -34,4 +34,10 @@ export async function signIn(userData: TSignIn) {
   });
 
   return jwtToken;
+}
+
+export async function getUserByToken(token: string) {
+  const { id } = await jwtVerify<TUserPayload>(token);
+
+  return findUserUnique({ id });
 }

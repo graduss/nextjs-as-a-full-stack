@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { TextField, Button } from "@mui/material";
@@ -13,8 +14,14 @@ type TFormData = {
   [EPostFormFields.CSRF_TOKEN]: string;
 }
 
-export default function NewPost({ csrfToken='' }: {csrfToken?: string}) {
+type TProps = {
+  csrfToken?: string;
+}
+export default function NewPost({
+  csrfToken=''
+}: TProps) {
   const refForm = useRef<HTMLFormElement>(null);
+  const route = useRouter();
   const { handleSubmit, register } = useForm<TFormData>({
     defaultValues: {
       [EPostFormFields.TITLE]: '',
@@ -24,7 +31,8 @@ export default function NewPost({ csrfToken='' }: {csrfToken?: string}) {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: createNew
+    mutationFn: createNew,
+    onSuccess: () => route.refresh(),
   });
 
   const submit: SubmitHandler<TFormData> = (data: TFormData) => {

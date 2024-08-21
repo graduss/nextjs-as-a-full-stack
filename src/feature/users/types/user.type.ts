@@ -1,4 +1,4 @@
-import { User } from '@prisma/client'
+import { User } from '@prisma/client';
 
 export type TSignUp = Omit<User, 'id' | 'createdAt' | 'updatedAt'>;
 export type TSignIn = Omit<User, 'id' | 'createdAt' | 'updatedAt'>;

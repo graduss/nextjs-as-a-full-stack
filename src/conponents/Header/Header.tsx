@@ -6,7 +6,7 @@ import Link from "next/link";
 export default async function Header() {
   const currentUser = await getCurrentUserIfExist();
   return (
-    <div className="px-8 py-4 flex gap-4 justify-end">
+    <header>
         {currentUser ? (
           <>
             <UserAvatar user={currentUser} />
@@ -18,6 +18,6 @@ export default async function Header() {
             <Link href={'/sign-up'}>SignUp</Link>
           </>
         )}
-      </div>
+      </header>
   );
 }

@@ -9,6 +9,10 @@ body {
   @apply text-gray-800 bg-gray-100;
 }
 
+header {
+  @apply px-8 py-4 flex gap-4 items-center justify-end;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
